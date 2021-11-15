@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ru.proektbg.exchange.Exchange">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FormLayout">
-    <rowspec value="center:d:grow"/>
+    <rowspec value="center:20px:grow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:d:grow"/>
+    <rowspec value="center:20px:grow"/>
+    <rowspec value="top:20px:noGrow"/>
     <colspec value="fill:d:grow"/>
     <colspec value="left:4dlu:noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="20" y="20" width="400" height="200"/>
+      <xy x="20" y="20" width="600" height="227"/>
     </constraints>
     <properties>
       <autoscrolls value="false"/>
       <background color="-1"/>
-      <minimumSize width="400" height="200"/>
-      <preferredSize width="200" height="60"/>
+      <minimumSize width="200" height="80"/>
+      <preferredSize width="200" height="80"/>
     </properties>
     <border type="none"/>
     <children>
@@ -27,7 +28,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <text value="Разница"/>
+          <text value="Δ"/>
         </properties>
       </component>
       <component id="c03b8" class="javax.swing.JTextPane" binding="dt">
@@ -39,6 +40,7 @@
         </constraints>
         <properties>
           <editable value="true"/>
+          <maximumSize width="7" height="22"/>
         </properties>
       </component>
       <component id="3ea0e" class="javax.swing.JTextPane" binding="value">
@@ -50,6 +52,7 @@
         </constraints>
         <properties>
           <editable value="true"/>
+          <maximumSize width="7" height="22"/>
         </properties>
       </component>
       <component id="5693a" class="javax.swing.JTextPane" binding="test">
@@ -69,6 +72,30 @@
         <clientProperties>
           <JEditorPane.honorDisplayProperties class="java.lang.Boolean" value="false"/>
         </clientProperties>
+      </component>
+      <component id="135ee" class="javax.swing.JTextPane" binding="profitTextPane" default-binding="true">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <foreground color="-16777216"/>
+          <text value="Profit"/>
+        </properties>
+      </component>
+      <component id="ed7d" class="javax.swing.JTextPane" binding="profitValue">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
       </component>
     </children>
   </grid>

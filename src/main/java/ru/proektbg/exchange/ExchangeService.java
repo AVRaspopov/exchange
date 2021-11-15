@@ -10,13 +10,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.util.concurrent.Callable;
 
-public class RestClient implements Callable<Double> {
+import java.awt.*;
+
+public class ExchangeService implements Runnable {
     private JSONObject binanceBody;
     private String bestChangeBody;
+    private Exchange exchange;
 
-    public RestClient() {
+    public ExchangeService(Exchange exchange) {
+        this.exchange = exchange;
         initBinanceBody();
         initBestChangeBody();
     }
@@ -30,7 +33,7 @@ public class RestClient implements Callable<Double> {
         binanceBody.put("asset", "USDT");
         binanceBody.put("fiat", "RUB");
         binanceBody.put("page", 1);
-        binanceBody.put("payTypes", new JSONArray());
+        binanceBody.put("payTypes", new JSONArray().put("Tinkoff"));
         binanceBody.put("publisherType", JSONObject.NULL);
         binanceBody.put("rows", 10);
         binanceBody.put("tradeType", "BUY");
@@ -38,8 +41,26 @@ public class RestClient implements Callable<Double> {
     }
 
     @Override
-    public Double call() throws Exception {
-        return getValueFromBinance() - getValueFromBestChange();
+    public void run() {
+        Double valueFromBinance = null;
+        Double valueFromBestChange = null;
+        try {
+            valueFromBinance = getValueFromBinance();
+            valueFromBestChange = getValueFromBestChange();
+        } catch (UnirestException e) {
+        }
+        exchange.updateValue(String.format("%1$,.2f", valueFromBinance - valueFromBestChange));
+        exchange.updateProfitValue(String.format("%1$,.2f", calcProfit(valueFromBinance, valueFromBestChange)));
+        exchange.updateDt();
+        if (valueFromBinance - valueFromBestChange >= 0.17)
+            exchange.setDtBackgroundColor(Color.GREEN);
+        else if (valueFromBinance - valueFromBestChange >= 0.27)
+            exchange.setDtBackgroundColor(Color.RED);
+        else exchange.setDtBackgroundColor(Color.WHITE);
+    }
+
+    private Double calcProfit(Double valueFromBinance, Double valueFromBestChange){
+        return Math.round((100000/valueFromBinance*(valueFromBinance-valueFromBestChange)/0.999)*100)/100.0;
     }
 
     private Double getValueFromBinance() throws UnirestException {
@@ -63,7 +84,8 @@ public class RestClient implements Callable<Double> {
         Document doc = Jsoup.parse(response.getBody());
         Elements elements = doc.getElementsByClass("fs");
         Element element = elements.get(0);
-        return Double.parseDouble(element.ownText());
+        Double result = Double.parseDouble(element.ownText());
+        return Math.round(result*100)/100.0;
     }
 
 }

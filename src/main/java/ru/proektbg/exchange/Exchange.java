@@ -1,6 +1,7 @@
 package ru.proektbg.exchange;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -10,6 +11,8 @@ public class Exchange extends JFrame{
     private JTextPane diffHeader;
     private JTextPane dt;
     private JTextPane value;
+    private JTextPane profitTextPane;
+    private JTextPane profitValue;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public Exchange(){
@@ -30,5 +33,21 @@ public class Exchange extends JFrame{
 
     public void updateValue(String value){
         this.value.setText(value);
+    }
+
+    public void updateProfitValue(String value){
+        this.profitValue.setText(value);
+    }
+
+    public JPanel getPanel1() {
+        return panel1;
+    }
+
+    public void setPanel1(JPanel panel1) {
+        this.panel1 = panel1;
+    }
+
+    public void setDtBackgroundColor(Color color){
+        dt.setBackground(color);
     }
 }
