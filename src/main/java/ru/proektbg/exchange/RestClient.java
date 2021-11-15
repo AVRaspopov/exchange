@@ -57,7 +57,9 @@ public class RestClient implements Callable<Double> {
 
     private Double getValueFromBestChange() throws UnirestException {
         HttpResponse<String> response =
-                Unirest.post("https://www.bestchange.ru/action.php").header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8").body(bestChangeBody).asString();
+                Unirest.post("https://www.bestchange.ru/action.php")
+                        .header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
+                        .body(bestChangeBody).asString();
         Document doc = Jsoup.parse(response.getBody());
         Elements elements = doc.getElementsByClass("fs");
         Element element = elements.get(0);

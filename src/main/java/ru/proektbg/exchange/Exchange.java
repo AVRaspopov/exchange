@@ -19,14 +19,16 @@ public class Exchange extends JFrame{
     public void init(){
         this.add(panel1);
         this.setAlwaysOnTop(true);
-        this.setSize(300, 150);
+        this.setSize(400, 200);
+        this.pack();
+        this.setTitle("Exchange");
     }
 
-    public void setDt(){
+    public void updateDt(){
         dt.setText(LocalDateTime.now().format(formatter));
     }
 
-    public void setValue(String value){
+    public void updateValue(String value){
         this.value.setText(value);
     }
 }

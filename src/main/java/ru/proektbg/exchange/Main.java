@@ -14,8 +14,8 @@ public class Main {
         while (true){
             Thread.sleep(5000);
             Future<Double> result = service.submit(restClient);
-            exchange.setValue(String.format("%1$,.2f", result.get()));
-            exchange.setDt();
+            exchange.updateValue(String.format("%1$,.2f", result.get()));
+            exchange.updateDt();
         }
     }
 }
