@@ -13,6 +13,10 @@ public class Exchange extends JFrame{
     private JTextPane value;
     private JTextPane profitTextPane;
     private JTextPane profitValue;
+    private JTextPane top3TextPane;
+    private JTextPane wwPay;
+    private JTextPane fastExchange;
+    private JTextPane eMoney;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public Exchange(){
@@ -50,4 +54,23 @@ public class Exchange extends JFrame{
     public void setDtBackgroundColor(Color color){
         dt.setBackground(color);
     }
+
+    public JTextPane getWwPay() {
+        return wwPay;
+    }
+
+    public JTextPane getFastExchange() {
+        return fastExchange;
+    }
+
+    public JTextPane geteMoney() {
+        return eMoney;
+    }
+
+    public void setExchangersWhiteColor(){
+        wwPay.setBackground(Color.WHITE);
+        fastExchange.setBackground(Color.WHITE);
+        eMoney.setBackground(Color.WHITE);
+    }
+
 }

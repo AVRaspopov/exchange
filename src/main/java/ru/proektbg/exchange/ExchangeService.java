@@ -48,11 +48,13 @@ public class ExchangeService implements Runnable {
             valueFromBinance = getValueFromBinance();
             valueFromBestChange = getValueFromBestChange();
         } catch (UnirestException e) {
+            return;
         }
-        exchange.updateValue(String.format("%1$,.2f", valueFromBinance - valueFromBestChange));
+        Double difference = valueFromBinance - valueFromBestChange;
+        exchange.updateValue(String.format("%1$,.2f", difference));
         exchange.updateProfitValue(String.format("%1$,.2f", calcProfit(valueFromBinance, valueFromBestChange)));
         exchange.updateDt();
-        if (valueFromBinance - valueFromBestChange >= 0.17)
+        if (difference >= 0.17 && difference < 0.27)
             exchange.setDtBackgroundColor(Color.GREEN);
         else if (valueFromBinance - valueFromBestChange >= 0.27)
             exchange.setDtBackgroundColor(Color.RED);
@@ -82,10 +84,25 @@ public class ExchangeService implements Runnable {
                         .header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
                         .body(bestChangeBody).asString();
         Document doc = Jsoup.parse(response.getBody());
+        checkExchanger(doc);
         Elements elements = doc.getElementsByClass("fs");
         Element element = elements.get(0);
         Double result = Double.parseDouble(element.ownText());
         return Math.round(result*100)/100.0;
+    }
+
+    private void checkExchanger(Document doc){
+        exchange.setExchangersWhiteColor();
+        Elements elements = doc.getElementsByClass("ca");
+        for (int i = 0; i < 3; i++) {
+            Element element = elements.get(i);
+            if (element.ownText().equals("FastExchange"))
+                exchange.getFastExchange().setBackground(Color.GREEN);
+            else if (element.ownText().equals("WW-Pay"))
+                exchange.getWwPay().setBackground(Color.GREEN);
+            else if (element.ownText().equals("E-Money"))
+                exchange.geteMoney().setBackground(Color.GREEN);
+        }
     }
 
 }
