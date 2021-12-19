@@ -52,13 +52,20 @@ public class ExchangeService implements Runnable {
         }
         Double difference = valueFromBinance - valueFromBestChange;
         exchange.updateValue(String.format("%1$,.2f", difference));
-        exchange.updateProfitValue(String.format("%1$,.2f", calcProfit(valueFromBinance, valueFromBestChange)));
+        Double profit = calcProfit(valueFromBinance, valueFromBestChange);
+        exchange.updateProfitValue(String.format("%1$,.2f", profit));
         exchange.updateDt();
-        if (difference >= 0.17 && difference < 0.27)
-            exchange.setDtBackgroundColor(Color.GREEN);
-        else if (valueFromBinance - valueFromBestChange >= 0.27)
+        exchange.setDtBackgroundColor(Color.WHITE);
+        if (profit >= 1000)
             exchange.setDtBackgroundColor(Color.RED);
+        else if (profit >= 500)
+            exchange.setDtBackgroundColor(Color.GREEN);
+        else if (profit > 250)
+            exchange.setDtBackgroundColor(Color.ORANGE);
+        else if (profit <= 0)
+            exchange.setDtBackgroundColor(Color.GRAY);
         else exchange.setDtBackgroundColor(Color.WHITE);
+
     }
 
     private Double calcProfit(Double valueFromBinance, Double valueFromBestChange){
@@ -96,12 +103,12 @@ public class ExchangeService implements Runnable {
         Elements elements = doc.getElementsByClass("ca");
         for (int i = 0; i < 3; i++) {
             Element element = elements.get(i);
-            if (element.ownText().equals("FastExchange"))
-                exchange.getFastExchange().setBackground(Color.GREEN);
-            else if (element.ownText().equals("WW-Pay"))
+            if (element.ownText().equals(Exchange.ex1))
+                exchange.getExchanger2().setBackground(Color.GREEN);
+            else if (element.ownText().equals(Exchange.ex2))
                 exchange.getWwPay().setBackground(Color.GREEN);
-            else if (element.ownText().equals("E-Money"))
-                exchange.geteMoney().setBackground(Color.GREEN);
+            else if (element.ownText().equals(Exchange.ex3))
+                exchange.getExchanger3().setBackground(Color.GREEN);
         }
     }
 
