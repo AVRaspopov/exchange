@@ -1,2 +1,4 @@
 # Project exclude paths
 /target/
+exchange.*
+exchange-1.0.jar

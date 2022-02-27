@@ -58,18 +58,19 @@ public class ExchangeService implements Runnable {
         exchange.setDtBackgroundColor(Color.WHITE);
         if (profit >= 1000)
             exchange.setDtBackgroundColor(Color.RED);
-        else if (profit >= 500)
+        else if (profit >= 750)
             exchange.setDtBackgroundColor(Color.GREEN);
+        else if (profit >= 500)
+            exchange.setDtBackgroundColor(new Color(153, 255, 153));
         else if (profit > 250)
             exchange.setDtBackgroundColor(Color.ORANGE);
-        else if (profit <= 0)
+        else if (profit <= 100)
             exchange.setDtBackgroundColor(Color.GRAY);
         else exchange.setDtBackgroundColor(Color.WHITE);
-
     }
 
     private Double calcProfit(Double valueFromBinance, Double valueFromBestChange){
-        return Math.round((100000/valueFromBinance*(valueFromBinance-valueFromBestChange)/0.999)*100)/100.0;
+        return ((100000/valueFromBestChange*valueFromBinance)-100000)*0.999;
     }
 
     private Double getValueFromBinance() throws UnirestException {
@@ -104,9 +105,9 @@ public class ExchangeService implements Runnable {
         for (int i = 0; i < 3; i++) {
             Element element = elements.get(i);
             if (element.ownText().equals(Exchange.ex1))
-                exchange.getExchanger2().setBackground(Color.GREEN);
+                exchange.getExchanger1().setBackground(Color.GREEN);
             else if (element.ownText().equals(Exchange.ex2))
-                exchange.getWwPay().setBackground(Color.GREEN);
+                exchange.getExchanger2().setBackground(Color.GREEN);
             else if (element.ownText().equals(Exchange.ex3))
                 exchange.getExchanger3().setBackground(Color.GREEN);
         }

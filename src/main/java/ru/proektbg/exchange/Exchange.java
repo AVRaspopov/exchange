@@ -63,7 +63,7 @@ public class Exchange extends JFrame{
         dt.setBackground(color);
     }
 
-    public JTextPane getWwPay() {
+    public JTextPane getExchanger1() {
         return exchanger1;
     }
 
